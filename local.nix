@@ -17,7 +17,7 @@
   timeZone = "Asia/Colombo";
 
   # Git identity (modules/home/git.nix).
-  gitUserName = "Banumath Hettiarachchi";
+  gitUserName = "btechioi";
   gitUserEmail = "btechioi@users.noreply.github.com";
 
   # Primary display scale (modules/home/niri.nix, output eDP-1).
