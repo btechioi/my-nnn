@@ -1,4 +1,4 @@
-# nnn-starter
+# my-nnn
 
 <p align="center">
   <img src="screenshot.png" alt="Screenshot of the NNN desktop — Niri + Noctalia on NixOS" width="100%">
@@ -38,15 +38,13 @@ Old names are aliased to the new tools (`ls`→`lsd`, `cat`→`bat`,
 
 ```sh
 # 1. Get the repo onto your machine (or into the live NixOS installer).
-git clone https://github.com/<you>/nnn-starter ~/nnn-starter
-cd ~/nnn-starter
+git clone https://github.com/btechioi/my-nnn ~/my-nnn
+cd ~/my-nnn
 
 # 2. Generate real hardware config for THIS machine.
 sudo nixos-generate-config --show-hardware-config > hosts/nnn/hardware-configuration.nix
 
-# 3. Put your identity in local.nix (see Placeholders below), then keep your
-#    edits out of git history:
-git update-index --skip-worktree local.nix
+# 3. Put your identity in local.nix (see Placeholders below).
 
 # 4. Build & switch.
 sudo nixos-rebuild switch --flake .#nnn
@@ -57,9 +55,7 @@ After the first build, rebuild with `nh os switch` (aliased to `rebuild`) or
 
 ## Placeholders to edit
 
-Your personal settings live in one place — [`local.nix`](local.nix). It's
-tracked with neutral defaults but marked `skip-worktree` (step 3) so your real
-values never get staged or committed.
+Your personal settings live in one place — [`local.nix`](local.nix).
 
 | What | Where |
 |------|-------|
@@ -71,18 +67,15 @@ values never get staged or committed.
 | **Locale / keyboard layout** | [`hosts/nnn/default.nix`](hosts/nnn/default.nix) |
 | **Monitor name / position** | `outputs` in [`modules/home/niri.nix`](modules/home/niri.nix) |
 
-> Editing the defaults themselves (e.g. to change the placeholders this repo
-> ships) needs `git update-index --no-skip-worktree local.nix` first.
-
 ## Layout
 
 ```
 flake.nix              # inputs + the single `nixosConfigurations.nnn`
-local.nix              # your machine-local identity (skip-worktree)
+local.nix              # your machine-local identity
 hosts/nnn/             # host: hardware + locale/timezone
 modules/nixos/         # system: boot, audio, niri, noctalia, stylix, users…
 modules/home/          # user: zsh, ghostty, neovim, niri keybinds, cli tools…
-themes/kanagawa.yaml   # vendored base16 palette (Stylix source of truth)
+themes/kanagawa.yaml   # vendored base16 palette (Stylix fallback)
 ```
 
 ## Key bindings (niri)
