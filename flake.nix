@@ -1,6 +1,19 @@
 {
   description = "nnn-starter — an opinionated NixOS starter for the NNN stack (NixOS + Niri + Noctalia)";
 
+  # Make cachix binary caches available during flake evaluation so niri and
+  # noctalia are fetched as prebuilt binaries instead of compiled from source.
+  nixConfig = {
+    extra-substituters = [
+      "https://niri.cachix.org"
+      "https://noctalia.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "niri.cachix.org-1:Wv0OmO7PsuocRKzfDo3mulSl7Z6oezYhGhR+3W2964="
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
