@@ -9,12 +9,12 @@
 # Put your real identity below; it flows into flake.nix and the modules.
 {
   # Login user and machine identity.
-  username = "nnn";
-  hostName = "nnn";
-  fullName = "NNN"; # shown as the user account description
+  username = "banumath";
+  hostName = "My-Laptop";
+  fullName = "Banumath Hettiarachchi"; # shown as the user account description
 
   # Locale / location.
-  timeZone = "Europe/Amsterdam";
+  timeZone = "Asia/Colombo";
 
   # Git identity (modules/home/git.nix).
   gitUserName = "NNN";
