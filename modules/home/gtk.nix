@@ -1,8 +1,7 @@
 {pkgs, ...}: {
-  # Icon theme for Nautilus and every other GTK app. GTK *colors* now come from
-  # Noctalia's gtk3/gtk4 templates (see modules/home/noctalia.nix), which paint
-  # adw-gtk3 with the Kanagawa palette and re-apply on theme changes. This
-  # deliberately leaves the icon theme alone — without it, Nautilus falls back
+  # Icon theme for Nautilus and every other GTK app. Stylix paints GTK *colors*
+  # (adw-gtk3 + the Kanagawa base16 palette, see modules/nixos/stylix.nix) but
+  # deliberately leaves the icon theme alone — without this, Nautilus falls back
   # to the bare hicolor/Adwaita defaults and looks plain.
   #
   # Papirus is the most complete Linux icon set (full folder + mime coverage).

@@ -1,17 +1,9 @@
 {pkgs, ...}: {
-  # Stylix handles fonts, cursor, and the apps Noctalia doesn't re-theme (niri,
-  # bat, btop, neovim, …). The shell, GTK, and Ghostty colors belong to Noctalia
-  # (see modules/home/noctalia.nix), so we opt those targets out below.
+  # One palette to rule them all. Stylix derives colors for niri, noctalia,
+  # ghostty, bat, btop, neovim, GTK/Qt and more from a single base16 scheme.
   stylix = {
     enable = true;
     polarity = "dark";
-
-    # Noctalia is now the theming driver for the apps whose colors it can
-    # render at runtime (see modules/home/noctalia.nix -> [theme.templates]).
-    # Turn Stylix off for those so the two systems never fight over the same
-    # file; Stylix keeps providing fonts, cursor, and the rest of the desktop.
-    targets.gtk.enable = false;
-    targets.ghostty.enable = false;
 
     # Kanagawa, vendored in-repo so the build never depends on whatever version
     # of `base16-schemes` happens to be pinned. To use an upstream scheme
