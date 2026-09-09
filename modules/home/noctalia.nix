@@ -18,11 +18,11 @@
     # Configure the shell interactively via its control center (Mod+Space →
     # settings) and, once you're happy, pin the values declaratively here under
     # `settings = { ... };` (schema at docs.noctalia.dev).
+    #
+    # Disable Noctalia's wallpaper service — Stylix handles the wallpaper
+    # through niri's config (stylix.image in modules/nixos/stylix.nix).
     settings = {
-      wallpaper = {
-        enabled = true;
-        default.path = ../../themes/wallpaper.png;
-      };
+      wallpaper.enabled = false;
     };
   };
 }
