@@ -1,6 +1,6 @@
 # PLACEHOLDER — replace this file with the one generated on your machine:
 #
-#   sudo nixos-generate-config --show-hardware-config > hosts/nnn/hardware-configuration.nix
+#   sudo nixos-generate-config --show-hardware-config > hosts/My-Laptop/hardware-configuration.nix
 #
 # It declares your disks, filesystems, kernel modules and CPU microcode. The
 # stub below only exists so the flake evaluates before you have real hardware

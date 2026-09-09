@@ -20,7 +20,7 @@
   home.username = username;
   home.homeDirectory = "/home/${username}";
 
-  # Match system.stateVersion in hosts/nnn/default.nix. Don't bump casually.
+  # Match system.stateVersion in hosts/My-Laptop/default.nix. Don't bump casually.
   home.stateVersion = "25.05";
 
   programs.home-manager.enable = true;

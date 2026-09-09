@@ -52,4 +52,4 @@ jobs:
       - name: Build the NixOS system closure
         run: |
           nix build --print-build-logs \
-            '.#nixosConfigurations.nnn.config.system.build.toplevel'
+            '.#nixosConfigurations.My-Laptop.config.system.build.toplevel'

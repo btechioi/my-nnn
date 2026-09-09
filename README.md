@@ -42,14 +42,14 @@ git clone https://github.com/<you>/nnn-starter ~/nnn-starter
 cd ~/nnn-starter
 
 # 2. Generate real hardware config for THIS machine.
-sudo nixos-generate-config --show-hardware-config > hosts/nnn/hardware-configuration.nix
+sudo nixos-generate-config --show-hardware-config > hosts/My-Laptop/hardware-configuration.nix
 
 # 3. Put your identity in local.nix (see Placeholders below), then keep your
 #    edits out of git history:
 git update-index --skip-worktree local.nix
 
 # 4. Build & switch.
-sudo nixos-rebuild switch --flake .#nnn
+sudo nixos-rebuild switch --flake .#My-Laptop
 ```
 
 After the first build, rebuild with `nh os switch` (aliased to `rebuild`) or
@@ -67,8 +67,8 @@ values never get staged or committed.
 | **Git identity** (name, email) | [`local.nix`](local.nix) |
 | **Timezone** | [`local.nix`](local.nix) |
 | **Monitor scale** | [`local.nix`](local.nix) |
-| **Hardware** | `hosts/nnn/hardware-configuration.nix` (generated, step 2 above) |
-| **Locale / keyboard layout** | [`hosts/nnn/default.nix`](hosts/nnn/default.nix) |
+| **Hardware** | `hosts/My-Laptop/hardware-configuration.nix` (generated, step 2 above) |
+| **Locale / keyboard layout** | [`hosts/My-Laptop/default.nix`](hosts/My-Laptop/default.nix) |
 | **Monitor name / position** | `outputs` in [`modules/home/niri.nix`](modules/home/niri.nix) |
 
 > Editing the defaults themselves (e.g. to change the placeholders this repo
@@ -77,9 +77,9 @@ values never get staged or committed.
 ## Layout
 
 ```
-flake.nix              # inputs + the single `nixosConfigurations.nnn`
-local.nix              # your machine-local identity (skip-worktree)
-hosts/nnn/             # host: hardware + locale/timezone
+flake.nix              # inputs + the single `nixosConfigurations.My-Laptop`
+local.nix              # your machine-local identity
+hosts/My-Laptop/       # host: hardware + locale/timezone
 modules/nixos/         # system: boot, audio, niri, noctalia, stylix, users…
 modules/home/          # user: zsh, ghostty, neovim, niri keybinds, cli tools…
 themes/kanagawa.yaml   # vendored base16 palette (Stylix source of truth)
@@ -139,13 +139,13 @@ nix flake check                                              # evaluate everythi
 nix flake show                                               # list outputs
 nix fmt                                                      # format (alejandra)
 nix run nixpkgs#statix -- check . && nix run nixpkgs#deadnix # lint
-nix eval .#nixosConfigurations.nnn.config.system.build.toplevel.drvPath
+nix eval .#nixosConfigurations.My-Laptop.config.system.build.toplevel.drvPath
 ```
 
 On a NixOS box (or with a remote/`linux-builder`) you can smoke-test in a VM:
 
 ```sh
-nixos-rebuild build-vm --flake .#nnn
+nixos-rebuild build-vm --flake .#My-Laptop
 ./result/bin/run-nnn-vm
 ```
 
