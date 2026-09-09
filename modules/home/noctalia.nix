@@ -22,7 +22,10 @@
     # Disable Noctalia's wallpaper service — Stylix handles the wallpaper
     # through niri's config (stylix.image in modules/nixos/stylix.nix).
     settings = {
-      wallpaper.enabled = false;
+      wallpaper = {
+        enabled = true;
+        default.path = ../../themes/wallpaper.png;
+      };
     };
   };
 }
