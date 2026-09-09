@@ -16,7 +16,7 @@ run one command, and get a cohesive, themed, developer-ready Wayland desktop.
 |--------------|--------|
 | Compositor   | [niri](https://github.com/YaLTeR/niri) (scrollable-tiling Wayland) via [niri-flake](https://github.com/sodiboo/niri-flake) |
 | Shell/UI     | [Noctalia](https://github.com/noctalia-dev/noctalia-shell) **v5** (bar, launcher, notifications, lock, control center) |
-| Theming      | [Stylix](https://github.com/nix-community/stylix) with the **Kanagawa** palette — one scheme themes everything |
+| Theming      | [Noctalia](https://docs.noctalia.dev/noctalia/theming/) ([Stylix](https://github.com/nix-community/stylix) for fonts/cursor) with the **Kanagawa** palette — Noctalia re-themes the shell + apps at runtime, incl. dark/light |
 | Terminal     | [Ghostty](https://ghostty.org) |
 | Shell + prompt | Zsh + [Starship](https://starship.rs) (autosuggestions, syntax highlighting, fzf, zoxide) |
 | Editor (GUI) | [Zed](https://zed.dev) — themed via Stylix; default handler for text/source files |
@@ -91,6 +91,7 @@ themes/kanagawa.yaml   # vendored base16 palette (Stylix source of truth)
 |------|--------|
 | `Mod`+`Return` | Terminal (ghostty) |
 | `Mod`+`Space` | Noctalia launcher |
+| `Mod`+`D` | Toggle Noctalia dark/light theme |
 | `Mod`+`B` | Browser (Zen) |
 | `Mod`+`E` | File manager (Nautilus) |
 | `Mod`+`Q` | Close window |
@@ -105,14 +106,28 @@ themes/kanagawa.yaml   # vendored base16 palette (Stylix source of truth)
 
 ## Reskin it
 
-Everything is driven by one base16 file. Swap the palette and rebuild:
+Noctalia owns the colors now. The palette lives as a custom **Kanagawa** palette
+(`customPalettes` in [`modules/home/noctalia.nix`](modules/home/noctalia.nix)),
+mapped onto Noctalia's semantic roles and rendered into the shell plus the
+enabled app templates (GTK, Ghostty) — so `Mod+D` flips dark/light and every
+covered app follows. To switch palette, either edit that one attrset, or point
+`[theme]` at another source:
 
 ```nix
-# modules/nixos/stylix.nix
-stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+# modules/home/noctalia.nix
+theme = {
+  mode = "dark";                       # dark | light | auto (sunrise/sunset)
+  source = "builtin";                  # builtin | wallpaper | community | custom
+  builtin = "Kanagawa";                # or Ayu, Catppuccin, Dracula, Gruvbox, Nord…
+  # source = "wallpaper";              # derive colors from the wallpaper
+  # wallpaper_scheme = "m3-content";
+};
 ```
 
-…or edit `themes/kanagawa.yaml` directly.
+App theming: toggling a built-in template (see `[theme.templates]`) id under
+`builtin_ids` makes Noctalia render that app's config from the palette and
+re-apply on theme changes. Apps whose config home-manager manages as read-only
+store symlinks (niri, starship, btop) stay on Stylix by default.
 
 ## Per-project dev environments
 

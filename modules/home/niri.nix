@@ -70,6 +70,9 @@
         "panel-toggle"
         "launcher"
       ];
+      # Toggle Noctalia's dark/light theme mode (also at Mod+Space → bar
+      # theme_mode widget). Noctalia re-applies every enabled template.
+      "Mod+D".action.spawn = ["noctalia" "msg" "theme-mode-toggle"];
       "Mod+B".action.spawn = "zen-beta"; # browser
       "Mod+E".action.spawn = "nautilus"; # file manager
 
