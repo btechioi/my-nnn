@@ -17,7 +17,12 @@
 
     # Configure the shell interactively via its control center (Mod+Space →
     # settings) and, once you're happy, pin the values declaratively here under
-    # `settings = { ... };` (schema at docs.noctalia.dev). Left at defaults so
-    # the build can't break on a settings key that doesn't exist yet.
+    # `settings = { ... };` (schema at docs.noctalia.dev).
+    settings = {
+      wallpaper = {
+        enabled = true;
+        default.path = ../../themes/wallpaper.png;
+      };
+    };
   };
 }
