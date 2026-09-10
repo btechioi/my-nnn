@@ -1,7 +1,6 @@
 {...}: {
   # Image viewer + media player. Both are Wayland-native and keyboard-driven,
-  # matching the niri/CLI-forward feel of the rest of the config. Stylix themes
-  # them automatically where it ships a target (autoEnable is on).
+  # matching the niri/CLI-forward feel of the rest of the config.
 
   # imv: minimal Wayland image viewer. `q` quits, arrows/`n`/`p` cycle a folder.
   programs.imv.enable = true;

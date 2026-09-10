@@ -7,7 +7,7 @@
       add_newline = true;
       command_timeout = 1000;
 
-      # A clean two-line prompt; colors come from Stylix.
+      # A clean two-line prompt; colors are the shell's own defaults.
       format = "$directory$git_branch$git_status$nix_shell$cmd_duration$line_break$character";
 
       character = {

@@ -1,13 +1,13 @@
 {local, ...}: {
   programs.niri.settings = {
-    # Stylix's niri target sets border/focus-ring colors and the cursor, so we
-    # only describe behaviour here.
+    # Behaviour only; the visuals (border/focus-ring/cursor) are set explicitly
+    # below rather than inherited from a theming tool.
 
     prefer-no-csd = true;
 
     input = {
       keyboard.xkb = {
-        layout = "us,ru";
+        layout = "us";
         options = "grp:alt_shift_toggle"; # Alt+Shift switches US <-> Russian
       };
       # Each window remembers its own layout ("global" = one shared layout).
@@ -38,10 +38,9 @@
         {proportion = 2.0 / 3.0;}
       ];
       default-column-width.proportion = 1.0 / 2.0;
-      # Stylix disables the focus-ring and themes the border instead, then we
-      # disable that border below — so re-enable the ring explicitly here or
-      # nothing gets drawn. Thin, soft Kanagawa foreground on the focused
-      # window; transparent on the rest so only the selected one is outlined.
+      # Thin, soft Kanagawa foreground on the focused window; transparent on
+      # the rest so only the selected one is outlined. (The border itself is
+      # disabled, so the ring is what draws the focus state.)
       focus-ring = {
         enable = true;
         width = 2;
@@ -70,7 +69,7 @@
         "panel-toggle"
         "launcher"
       ];
-      "Mod+B".action.spawn = "zen-beta"; # browser
+      "Mod+B".action.spawn = "google-chrome-beta"; # browser
       "Mod+E".action.spawn = "nautilus"; # file manager
 
       # Window management

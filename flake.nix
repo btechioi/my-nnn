@@ -32,22 +32,6 @@
     # behind. Crucially we do NOT make it follow our nixpkgs — that would
     # rebuild it against a different nixpkgs and miss the cache.
     noctalia.url = "github:noctalia-dev/noctalia-shell/cachix";
-
-    # System-wide base16 theming.
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Zen browser (not in nixpkgs). It's a repackaged binary (fixed-output
-    # download + wrapFirefox), so following our nixpkgs is cheap and avoids a
-    # duplicate nixpkgs in the closure.
-    zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-      # Its home-manager module reuses HM's firefox module, so share ours.
-      inputs.home-manager.follows = "home-manager";
-    };
   };
 
   outputs = {
@@ -55,7 +39,6 @@
     home-manager,
     niri,
     noctalia,
-    stylix,
     ...
   } @ inputs: let
     # The platform the NNN machine runs on.
@@ -83,7 +66,6 @@
       modules = [
         niri.nixosModules.niri
         noctalia.nixosModules.default
-        stylix.nixosModules.stylix
         home-manager.nixosModules.home-manager
 
         ./hosts/My-Laptop
@@ -98,13 +80,16 @@
           nixpkgs.overlays = [
             niri.overlays.niri
             noctalia.overlays.default
+            # nixpkgs dropped every google-chrome channel but stable; rebase the
+            # upstream builder onto Google's beta .deb (see the overlay header).
+            (import ./overlays/chrome-beta.nix)
           ];
 
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.backupFileExtension = "hm-bak";
           home-manager.extraSpecialArgs = {inherit inputs username local;};
-          # niri-flake auto-imports its home modules (config + stylix) into
+          # niri-flake auto-imports its home modules (the config target) into
           # every user when home-manager runs as a NixOS module, so we only
           # add noctalia's here. Importing the niri ones again double-declares
           # `programs.niri.finalConfig`.

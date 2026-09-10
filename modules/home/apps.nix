@@ -1,10 +1,7 @@
 {
   pkgs,
-  inputs,
   ...
 }: {
-  imports = [inputs.zen-browser.homeModules.beta];
-
   # GUI desktop apps. Browsers and file managers live here rather than in the
   # CLI bundle.
   home.packages = [
@@ -12,22 +9,22 @@
     # service enabled in modules/nixos/desktop.nix for trash + mounting, and
     # backs the browser's "open/save" file picker via the gtk xdg portal.
     pkgs.nautilus
+
+    # Google Chrome (beta) — the default and only browser. nixpkgs only ships
+    # the stable channel, so it's built from Google's official beta deb by
+    # overlays/chrome-beta.nix. (Unfree — allowed in flake.nix.)
+    pkgs.google-chrome-beta
   ];
 
-  # Zen browser — Firefox-based, from the community flake (beta channel).
-  # Managed through the flake's home-manager module (rather than just dropping
-  # the package in home.packages) so that:
-  #   1. `setAsDefaultBrowser` registers the xdg mime associations for
-  #      http(s)/html and exports $BROWSER=zen-beta (used by gh, git, etc.).
-  #   2. Stylix's zen-browser target can theme its profile (see below).
-  programs.zen-browser = {
-    enable = true;
-    setAsDefaultBrowser = true;
+  # Make Chrome the default handler for web content (and $BROWSER for tools
+  # like gh / git). zed.nix claims the text/* source types; Chrome only takes
+  # the web ones, so there is no overlap.
+  xdg.mimeApps.defaultApplications = {
+    "x-scheme-handler/http" = "google-chrome-beta.desktop";
+    "x-scheme-handler/https" = "google-chrome-beta.desktop";
+    "x-scheme-handler/ftp" = "google-chrome-beta.desktop";
+    "text/html" = "google-chrome-beta.desktop";
+    "application/xhtml+xml" = "google-chrome-beta.desktop";
   };
-
-  # Paint Zen's chrome + about:/newtab pages with the same Kanagawa base16
-  # palette Stylix uses everywhere else. The target writes userChrome.css and
-  # userContent.css into the named profile and flips on the
-  # `toolkit.legacyUserProfileCustomizations.stylesheets` pref for us.
-  stylix.targets.zen-browser.profileNames = ["default"];
+  home.sessionVariables.BROWSER = "google-chrome-beta";
 }

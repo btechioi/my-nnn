@@ -5,7 +5,7 @@
 }: {
   # ── Tools with a home-manager program module ──────────────────────────────
   # Using programs.* (rather than raw packages) gets us shell integration and
-  # Stylix theming for free.
+  # sane generated configs.
 
   programs.lsd = {
     enable = true;

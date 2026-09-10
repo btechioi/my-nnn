@@ -7,5 +7,5 @@
   # To manage it declaratively instead, set programs.claude-code.settings,
   # .agents, .commands, .mcpServers, … (see the home-manager module docs) — the
   # settings.json file is only written once you provide some.
-  programs.claude-code.enable = true;
+  programs.opencode.enable = true;
 }

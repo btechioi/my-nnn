@@ -11,7 +11,7 @@
     ./niri.nix
     ./noctalia.nix
     ./direnv.nix
-    ./claude-code.nix
+    ./opencode.nix
     ./apps.nix
     ./media.nix
     ./discord.nix
@@ -21,7 +21,7 @@
   home.homeDirectory = "/home/${username}";
 
   # Match system.stateVersion in hosts/My-Laptop/default.nix. Don't bump casually.
-  home.stateVersion = "25.05";
+  home.stateVersion = "26.05";
 
   programs.home-manager.enable = true;
 }

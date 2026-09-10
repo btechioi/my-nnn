@@ -24,4 +24,9 @@
   # Passwordless sudo for the wheel group keeps `nixos-rebuild` snappy. Drop the
   # `wheelNeedsPassword = false` line if you'd rather be prompted.
   security.sudo.wheelNeedsPassword = false;
+
+  # AccountsService (D-Bus org.freedesktop.Accounts): lets Noctalia publish the
+  # user's avatar as the system IconFile, so login greeters and account UIs see
+  # the same face. See modules/home/noctalia.nix → shell.avatar_path.
+  services.accounts-daemon.enable = true;
 }

@@ -10,7 +10,7 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   services.xserver.xkb = {
-    layout = "us,ru";
+    layout = "us";
     variant = "";
     options = "grp:alt_shift_toggle"; # Alt+Shift switches US <-> Russian
   };
@@ -18,5 +18,5 @@
 
   # The release this config was written against. Do NOT bump casually after
   # first install — read the NixOS release notes first.
-  system.stateVersion = "25.05";
+  system.stateVersion = "26.05";
 }

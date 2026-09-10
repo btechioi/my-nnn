@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   ...
 }: {
@@ -7,27 +6,23 @@
   # (see modules/home/neovim.nix); Zed is what opens when you double-click a
   # text file in Nautilus or pick "open with default" from anywhere else.
   #
-  # Stylix's zed target syncs our Maple Mono / Noto fonts into Zed. For the
-  # colors we don't use Stylix's mechanically-generated "Base16 Kanagawa" — its
-  # base16 mapping makes keywords a harsh red and its template emits an
-  # appearance Zed rejects. Instead we use the hand-tuned "Kanagawa Wave" from
-  # the kanagawa-themes extension (declared below so it installs reproducibly).
+  # Fonts come from the system fontconfig defaults (modules/nixos/fonts.nix).
+  # For the colors we use the hand-tuned "Kanagawa Wave" theme from the
+  # kanagawa-themes extension (declared below so it installs reproducibly).
   programs.zed-editor = {
     enable = true;
 
     # Auto-installed on startup. Names come from the Zed extension registry:
     # https://github.com/zed-industries/extensions
     extensions = [
-      "kanagawa-themes" # color theme, selected below
       "catppuccin-icons" # file-type icon theme, selected below
       "nix" # Nix language support
       "html" # HTML language support
     ];
 
     userSettings = {
-      # Hand-tuned Kanagawa from the extension above. mkForce because the Stylix
-      # zed target also sets `theme` (to its harsh Base16 build).
-      theme = lib.mkForce "Kanagawa Wave";
+      # Hand-tuned Kanagawa from the extension above.
+      theme = "Noctalia Dark";
 
       # File-type icons from the catppuccin-icons extension above.
       icon_theme = "Catppuccin Frappé";
@@ -65,10 +60,9 @@
     mimeType = ["text/plain" "application/x-zerosize" "x-scheme-handler/zed"];
   };
 
-  # Make Zed the default GUI handler for plain-text and source files. The
-  # zen-browser module (modules/home/apps.nix) also claims text/plain, but only
-  # with lib.mkDefault, so these plain assignments win. We deliberately leave
-  # text/html and application/json to Zen.
+  # Make Zed the default GUI handler for plain-text and source files. Chrome
+  # (modules/home/apps.nix) claims text/html and the http(s) schemes, so we
+  # deliberately leave those alone here.
   xdg.mimeApps = {
     enable = true;
     defaultApplications = let

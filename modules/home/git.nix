@@ -23,7 +23,7 @@
     };
   };
 
-  # delta gives syntax-highlighted, side-by-side diffs (themed by Stylix).
+  # delta gives syntax-highlighted, side-by-side diffs.
   programs.delta = {
     enable = true;
     enableGitIntegration = true;

@@ -16,12 +16,12 @@ run one command, and get a cohesive, themed, developer-ready Wayland desktop.
 |--------------|--------|
 | Compositor   | [niri](https://github.com/YaLTeR/niri) (scrollable-tiling Wayland) via [niri-flake](https://github.com/sodiboo/niri-flake) |
 | Shell/UI     | [Noctalia](https://github.com/noctalia-dev/noctalia-shell) **v5** (bar, launcher, notifications, lock, control center) |
-| Theming      | [Stylix](https://github.com/nix-community/stylix) with the **Kanagawa** palette — one scheme themes everything |
+| Theming      | Noctalia's own bar/launcher styling + hand-tuned niri colors (no system-wide theming engine) |
 | Terminal     | [Ghostty](https://ghostty.org) |
 | Shell + prompt | Zsh + [Starship](https://starship.rs) (autosuggestions, syntax highlighting, fzf, zoxide) |
-| Editor (GUI) | [Zed](https://zed.dev) — themed via Stylix; default handler for text/source files |
+| Editor (GUI) | [Zed](https://zed.dev) — hand-tuned Kanagawa theme; default handler for text/source files |
 | Editor (terminal) | Neovim, preconfigured (LSP, treesitter, telescope, completion); the `$EDITOR` |
-| Browser      | [Zen](https://zen-browser.app) (beta channel, via the community flake) |
+| Browser      | [Google Chrome (beta)](https://www.google.com/chrome/beta/) — the only browser, built from the official beta `.deb` |
 | File manager | [Nautilus](https://apps.gnome.org/Nautilus/) (GNOME Files) |
 | Font         | Maple Mono NF |
 | Login        | greetd + tuigreet → niri session |
@@ -80,9 +80,10 @@ values never get staged or committed.
 flake.nix              # inputs + the single `nixosConfigurations.My-Laptop`
 local.nix              # your machine-local identity
 hosts/My-Laptop/       # host: hardware + locale/timezone
-modules/nixos/         # system: boot, audio, niri, noctalia, stylix, users…
+modules/nixos/         # system: boot, audio, niri, noctalia, users…
 modules/home/          # user: zsh, ghostty, neovim, niri keybinds, cli tools…
-themes/kanagawa.yaml   # vendored base16 palette (Stylix source of truth)
+overlays/              # chrome-beta.nix: nixpkgs only ships stable Chrome
+themes/avatar.png      # Noctalia avatar + ~/.face (Control Center / lock screen)
 ```
 
 ## Key bindings (niri)
@@ -91,7 +92,7 @@ themes/kanagawa.yaml   # vendored base16 palette (Stylix source of truth)
 |------|--------|
 | `Mod`+`Return` | Terminal (ghostty) |
 | `Mod`+`Space` | Noctalia launcher |
-| `Mod`+`B` | Browser (Zen) |
+| `Mod`+`B` | Browser (Chrome beta) |
 | `Mod`+`E` | File manager (Nautilus) |
 | `Mod`+`Q` | Close window |
 | `Mod`+`F` / `Mod`+`Shift`+`F` | Maximize column / fullscreen |
@@ -105,14 +106,15 @@ themes/kanagawa.yaml   # vendored base16 palette (Stylix source of truth)
 
 ## Reskin it
 
-Everything is driven by one base16 file. Swap the palette and rebuild:
+Theming is deliberately minimalist: Noctalia's bar/launcher follow its own
+settings (tweak them via the control center, `Mod`+`Space` → settings, and pin
+them under `settings` in [`modules/home/noctalia.nix`](modules/home/noctalia.nix)).
+The niri window chrome is a hand-set focus-ring color in
+[`modules/home/niri.nix`](modules/home/niri.nix).
 
-```nix
-# modules/nixos/stylix.nix
-stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-```
-
-…or edit `themes/kanagawa.yaml` directly.
+To update Chrome (beta), bump `version`/`hash` at the top of
+[`overlays/chrome-beta.nix`](overlays/chrome-beta.nix) — grab the current values
+from `https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb`.
 
 ## Per-project dev environments
 

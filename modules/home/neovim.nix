@@ -1,9 +1,4 @@
 {pkgs, ...}: {
-  # Let the official kanagawa.nvim plugin own neovim's colors instead of
-  # Stylix's base16 approximation (which paints fields/identifiers samuraiRed).
-  # Same palette, but with treesitter-aware, fine-grained highlights.
-  stylix.targets.neovim.enable = false;
-
   programs.neovim = {
     enable = true;
     defaultEditor = true;
